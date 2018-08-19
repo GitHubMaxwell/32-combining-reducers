@@ -1,10 +1,18 @@
 import React from 'react'
 import CategoryItem from '../category-item/CategoryItem.js'
 import CategoryForm from '../category-form/CategoryForm.js'
-import { categoryCreate, categoryDestroy, categoryUpdate } from '../../action/actions.js'
+import ExpenseItem from '../expense-item/ExpenseItem.js'
+import ExpenseForm from '../expense-form/ExpenseForm.js'
+import { categoryCreate, categoryDestroy, categoryUpdate } from '../../action/category-actions.js'
+//////////////////////////////
+import { expenseCreate, expenseUpdate } from '../../action/expense-actions.js'
+// import { expenseTest } from '../../action/expense-actions.js'
+//////////////////////////////
+
 import { connect } from 'react-redux';
 
 class Dashboard extends React.Component {
+    // make an expense version of updateId and category
     constructor(props) {
         super(props)
         this.state = {
@@ -12,8 +20,9 @@ class Dashboard extends React.Component {
                 id: '',
                 name: '',
                 budget: '',
+                expenses : []
             },
-            updateId: ''
+            updateId: '',
         }
         // this.addNote = this.addNote.bind(this)
         this.updateMode = this.updateMode.bind(this)
@@ -26,7 +35,7 @@ class Dashboard extends React.Component {
     updateCategory(e) {
         // const val = e.target.type === 'checkbox' ? e.target.checked : e.target.value;
         const val = e.target.value;
-        this.setState({note: {...this.state.category,[e.target.name] : val}})
+        this.setState({category: {...this.state.category,[e.target.name] : val}})
     }
 
     updateMode(note) {
@@ -71,8 +80,16 @@ class Dashboard extends React.Component {
         return (
             <React.Fragment>
                 <CategoryForm onComplete={this.props.categoryCreate} />
+
                 <CategoryItem categoryUpdate={this.props.categoryUpdate} removeCategory={this.removeCategory} updateId={this.state.updateId} category={this.props.category} updateMode={this.updateMode}>
                     <CategoryForm onComplete={this.props.categoryUpdate} updateId={this.state.updateId}/>
+                    
+                    <ExpenseForm updateId={this.state.updateId} onComplete={this.props.expenseCreate}/>
+
+                    <ExpenseItem updateId={this.state.updateId}>
+                        <ExpenseForm onComplete={this.props.expenseUpdate}/>
+                    </ExpenseItem>
+                    
                 </CategoryItem>
             </React.Fragment>
         )
@@ -82,10 +99,16 @@ class Dashboard extends React.Component {
 const mapDispatchToProps = (dispatch) => ({
     categoryCreate : (payload) => dispatch(categoryCreate(payload)),
     categoryDestroy : (payload) => dispatch(categoryDestroy(payload)),
-    categoryUpdate : (payload) => dispatch(categoryUpdate(payload))
+    categoryUpdate : (payload) => dispatch(categoryUpdate(payload)),
+    expenseUpdate : (payload) => dispatch(expenseUpdate(payload)),
+    expenseCreate : (payload) => dispatch(expenseCreate(payload)),
+    // expenseTest : () => dispatch(expenseTest())
 })
+
+// have to adjust this to target only category state portion or expense state portion
 const mapStateToProps = state => ({
-    category : state
+    category : state.catReducer,
+    // expense : state.expReducer
 })
 
 export default connect(mapStateToProps,mapDispatchToProps)(Dashboard)

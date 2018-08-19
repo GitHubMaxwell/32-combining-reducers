@@ -8,7 +8,7 @@ export default class CategoryForm extends React.Component {
     configurePayload(e) {
         e.preventDefault()
         let payload;
-        console.log('updateId',this.props.updateId)
+        // console.log('updateId',this.props.updateId)
         if(this.props.updateId) {
             payload = {
                 id : this.props.updateId,
@@ -21,11 +21,7 @@ export default class CategoryForm extends React.Component {
                 budget : e.target.budget.value
             }
         }
-
-        
-        console.log(payload)
         this.props.onComplete(payload);
-
         document.getElementById('form').reset();
     }
     render() {

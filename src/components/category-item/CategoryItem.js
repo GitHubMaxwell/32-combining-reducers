@@ -1,17 +1,14 @@
 import React from 'react';
-// import CategoryForm from '../category-form/CategoryForm.js'
+import { connect } from 'react-redux';
 
-export default class CategoryItem extends React.Component {
+class CategoryItem extends React.Component {
     constructor(props) {
         super(props)
     this.editView = this.editView.bind(this)
     }
 
-    //only submit action refreshes the page
-    editView(note) {
-        
-        this.props.updateMode(note)
-        // console.log(e.target)
+    editView(category) {
+        this.props.updateMode(category)
     }
 
     render() {
@@ -19,12 +16,13 @@ export default class CategoryItem extends React.Component {
             <React.Fragment>
                 <ul className="nav">
                 {
-                    this.props.category.map((note) =>
-                            <li className="note" name={note.id} key={note.id} onDoubleClick={() => this.editView(note)}>
-                                <h3>{note.name}</h3>
-                                <p>{note.budget}</p>
-                                <input type="button" onClick={this.props.removeCategory} name={note.id} value="delete"/>
-                                {this.props.updateId === note.id && this.props.children}
+                    this.props.category.map((category) =>
+                            <li className="note" name={category.id} key={category.id} onDoubleClick={() => this.editView(category)}>
+                                <h3>{category.name}</h3>
+                                <p>{category.budget}</p>
+                                <input type="button" onClick={this.props.removeCategory} name={category.id} value="delete"/>
+
+                                {this.props.updateId === category.id && this.props.children}
                             </li>
                         )
                 }
@@ -33,3 +31,9 @@ export default class CategoryItem extends React.Component {
         )
     }
 }
+
+const mapStateToProps = state => ({
+    expense : state.expReducer
+})
+
+export default connect(mapStateToProps)(CategoryItem)

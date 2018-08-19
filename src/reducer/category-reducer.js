@@ -2,7 +2,7 @@ let initialState = []
 
 export default (state=initialState,action) => {
     let {type, payload} = action;
-    console.log('payload',payload)
+    // console.log('payload',payload)
     // console.log('action',action)
 
     switch(type) {
