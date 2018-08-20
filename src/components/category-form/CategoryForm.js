@@ -27,11 +27,6 @@ export default class CategoryForm extends React.Component {
     render() {
         return(
             <React.Fragment>
-                {/* {
-                    if(this.props.note.id) {
-                        {}
-                    }
-                } */}
                 <h2>Create Category</h2>
                 <form id="form" onSubmit={this.configurePayload}>
                     <label>Category Name:</label>

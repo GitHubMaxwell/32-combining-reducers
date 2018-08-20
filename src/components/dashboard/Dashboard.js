@@ -20,15 +20,16 @@ class Dashboard extends React.Component {
                 id: '',
                 name: '',
                 budget: '',
-                expenses : []
             },
             updateId: '',
+            updateExp: '',
         }
         // this.addNote = this.addNote.bind(this)
         this.updateMode = this.updateMode.bind(this)
         this.cancelUpdate = this.cancelUpdate.bind(this)
         this.removeCategory = this.removeCategory.bind(this)
         this.updateCategory = this.updateCategory.bind(this)
+        this.updateExp = this.updateExp.bind(this)
         this.populateCategoryObj = this.populateCategoryObj.bind(this)
     }
 
@@ -36,6 +37,21 @@ class Dashboard extends React.Component {
         // const val = e.target.type === 'checkbox' ? e.target.checked : e.target.value;
         const val = e.target.value;
         this.setState({category: {...this.state.category,[e.target.name] : val}})
+    }
+
+    updateExp(expense) {
+        // let updateExp = expense.id
+        // this.setState({
+        //     updateExp
+        // })
+        console.log('Update Exp')
+        if(this.state.updateExp) {
+            this.setState({updateExp : ''})
+        } else {
+            this.setState({updateExp : expense.id})
+        }
+
+        // this.props.expenseUpdate(expense)
     }
 
     updateMode(note) {
@@ -53,6 +69,14 @@ class Dashboard extends React.Component {
         // console.log('updateMode')
     }
 
+    populateCategoryObj(note) {
+        // console.log('pop Id:', note.id)
+        let category = note
+        this.setState({
+            category
+        })
+    }
+
     cancelUpdate() {
         let id = '';
         let budget= '';
@@ -68,15 +92,8 @@ class Dashboard extends React.Component {
         this.props.categoryDestroy(e.target.name)
     }
 
-    populateCategoryObj(note) {
-        // console.log('pop Id:', note.id)
-        let category = note
-        this.setState({
-            category
-        })
-    }
-
     render() {
+        // refactor some of the function passed from this class to child components to actions and reducers
         return (
             <React.Fragment>
                 <CategoryForm onComplete={this.props.categoryCreate} />
@@ -84,10 +101,10 @@ class Dashboard extends React.Component {
                 <CategoryItem categoryUpdate={this.props.categoryUpdate} removeCategory={this.removeCategory} updateId={this.state.updateId} category={this.props.category} updateMode={this.updateMode}>
                     <CategoryForm onComplete={this.props.categoryUpdate} updateId={this.state.updateId}/>
                     
-                    <ExpenseForm updateId={this.state.updateId} onComplete={this.props.expenseCreate}/>
+                    <ExpenseForm updateExp={this.state.updateExp} uExp={this.updateExp} updateId={this.state.updateId} onComplete={this.props.expenseCreate}/>
 
-                    <ExpenseItem updateId={this.state.updateId}>
-                        <ExpenseForm onComplete={this.props.expenseUpdate}/>
+                    <ExpenseItem updateId={this.state.updateId} updateExp={this.state.updateExp} uExp={this.updateExp}>
+                        <ExpenseForm updateId={this.state.updateId} updateExp={this.state.updateExp} uExp={this.updateExp} onComplete={this.props.expenseUpdate}/>
                     </ExpenseItem>
                     
                 </CategoryItem>

@@ -10,10 +10,15 @@ export const expenseCreate = expense => {
     }
 }
 
-export const expenseUpdate = expense => ({
+export const expenseUpdate = expense => {
+
+    console.log('expUP action: ',expense);
+    
+    return {
     type: 'EXPENSE_UPDATE',
     payload: expense,
-})
+    }
+}
 
 export const expenseDelete = expense => ({
     type:'EXPENSE_DELETE',

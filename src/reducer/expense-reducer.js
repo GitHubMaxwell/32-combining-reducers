@@ -21,8 +21,8 @@ export default (state=initialState, action) => {
     switch(type) {
         //why two returns?
         case 'EXPENSE_CREATE' : return [...state,payload]
-        case 'EXPENSE_UPDATE' : return state.map(expense => {return expense.id === payload.id ? payload : expense})
-        case 'EXPENSE_DELETE' : return state.filter(expense => {return expense.id !== payload})
+        case 'EXPENSE_UPDATE' : return state.map(expense => expense.id === payload.id ? payload : expense)
+        case 'EXPENSE_DELETE' : return state.filter(expense => expense.id !== payload)
         case 'EXPENSE_TEST' : payload => console.log('Hello Expense:',payload);
 
         default : return state

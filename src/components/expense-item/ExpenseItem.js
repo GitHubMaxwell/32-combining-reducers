@@ -1,10 +1,9 @@
 import React from 'react'
 // import { expenseTest } from '../../action/expense-actions.js'
-import { expenseDelete, expenseUpdate } from '../../action/expense-actions.js'
+import { expenseDelete } from '../../action/expense-actions.js'
 import { connect } from 'react-redux';
 
 // each item handles its own update but form handles the initial creaet
-
 
 class ExpenseItem extends React.Component {
     constructor(props){
@@ -15,34 +14,28 @@ class ExpenseItem extends React.Component {
                 price : '',
                 categoryId : ''
             },
-            updateExp : ''
+            updateExp : '',
         }
         // this.handleUpdate = this.handleSubmit.bind(this)
         this.handleDelete = this.handleDelete.bind(this)
-        this.editView = this.editView.bind(this)
+        // this.editView = this.editView.bind(this)
     }
 
-    editView(expense) {
-        // this setState
-        console.log('EXP UPDATE')
-        if(this.state.updateExp) {
-            this.setState({updateExp : ''})
-        } else {
-            this.setState({updateExp : expense.id})
-        }
-    }
+
+    // onDoubleClick={() => this.editView(expense)}
+    // editView(expense) {
+
+    //     // change this to setState in Dashboard updateExp state and method / pass as props
+    //     // console.log('EXP UPDATE')
+
+    //     this.props.uExp(expense)
+    // }
 
     handleDelete(e) {
         //passing the reducer method expenseDelete the expense.id to go through the expense array and filter out this specific expense
         let id = e.target.name
         // console.log('DELETE ID: ',id)
         this.props.expenseDelete(id)
-    }
-    handleUpdate(e) {
-        // send the id of the expense and the payload
-        // doubleclick adds the expense.id to the updateExp field making the form child per that LI visible
-        e.preventDefault()
-        this.props.expenseUpdate()
     }
 
     render() {
@@ -53,13 +46,13 @@ class ExpenseItem extends React.Component {
                 {
                     this.props.expense.map((expense) =>
                     {
-                        console.log('UPDATE ID:',this.props.updateId)
+                        // console.log('UPDATE ID:',this.props.updateId)
                         if(expense.categoryId === this.props.updateId) {
-                            return <li className="note" name={expense.id} key={expense.id} onDoubleClick={() => this.editView(expense)}>
+                            return <li className="note" name={expense.id} key={expense.id} onDoubleClick={() => this.props.uExp(expense)}>
                                 <h3>{expense.name}</h3>
                                 <p>{expense.price}</p>
                                 <input type="button" onClick={this.handleDelete} name={expense.id} value="delete"/>
-                                {this.state.updateExp === expense.id && this.props.children}
+                                {this.props.updateExp === expense.id && this.props.children}
                             </li>
                         }
                     })
@@ -72,7 +65,7 @@ class ExpenseItem extends React.Component {
 
 const mapDispatchToProps = (dispatch) => ({
     expenseDelete : (payload) => dispatch(expenseDelete(payload)),
-    expenseUpdate : (payload) => dispatch(expenseUpdate(payload)),
+    // expenseUpdate : (payload) => dispatch(expenseUpdate(payload)),
     expenseTest : () => dispatch(expenseTest())
 })
 
