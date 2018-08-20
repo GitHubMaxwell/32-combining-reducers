@@ -1,4 +1,4 @@
-![cf](http://i.imgur.com/7v5ASc8.png) 32: Combining Reducers [![Build Status](https://travis-ci.com/GitHubMaxwell/32-combining-reducers.svg?branch=max2-lab32)](https://travis-ci.com/GitHubMaxwell/32-combining-reducers)
+![cf](http://i.imgur.com/7v5ASc8.png) 32: Combining Reducers [![Build Status](https://travis-ci.com/GitHubMaxwell/32-combining-reducers.svg?branch=master)](https://travis-ci.com/GitHubMaxwell/32-combining-reducers)
 ===
 
 ## Links
