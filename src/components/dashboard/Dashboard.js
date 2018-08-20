@@ -4,10 +4,7 @@ import CategoryForm from '../category-form/CategoryForm.js'
 import ExpenseItem from '../expense-item/ExpenseItem.js'
 import ExpenseForm from '../expense-form/ExpenseForm.js'
 import { categoryCreate, categoryDestroy, categoryUpdate } from '../../action/category-actions.js'
-//////////////////////////////
 import { expenseCreate, expenseUpdate } from '../../action/expense-actions.js'
-// import { expenseTest } from '../../action/expense-actions.js'
-//////////////////////////////
 
 import { connect } from 'react-redux';
 
@@ -24,7 +21,6 @@ class Dashboard extends React.Component {
             updateId: '',
             updateExp: '',
         }
-        // this.addNote = this.addNote.bind(this)
         this.updateMode = this.updateMode.bind(this)
         this.cancelUpdate = this.cancelUpdate.bind(this)
         this.removeCategory = this.removeCategory.bind(this)
@@ -34,43 +30,28 @@ class Dashboard extends React.Component {
     }
 
     updateCategory(e) {
-        // const val = e.target.type === 'checkbox' ? e.target.checked : e.target.value;
         const val = e.target.value;
         this.setState({category: {...this.state.category,[e.target.name] : val}})
     }
 
     updateExp(expense) {
-        // let updateExp = expense.id
-        // this.setState({
-        //     updateExp
-        // })
-        console.log('Update Exp')
         if(this.state.updateExp) {
             this.setState({updateExp : ''})
         } else {
             this.setState({updateExp : expense.id})
         }
-
-        // this.props.expenseUpdate(expense)
     }
 
     updateMode(note) {
         let updateId = note.id
-        // e.preventDefault()
-        // let updateId = e.target.name;
-
-        // console.log('updateMode updateId:',updateId)
-        // console.log('updateMode note:',note)
 
         this.setState({
             updateId
         })
         this.populateCategoryObj(note);
-        // console.log('updateMode')
     }
 
     populateCategoryObj(note) {
-        // console.log('pop Id:', note.id)
         let category = note
         this.setState({
             category
@@ -119,13 +100,10 @@ const mapDispatchToProps = (dispatch) => ({
     categoryUpdate : (payload) => dispatch(categoryUpdate(payload)),
     expenseUpdate : (payload) => dispatch(expenseUpdate(payload)),
     expenseCreate : (payload) => dispatch(expenseCreate(payload)),
-    // expenseTest : () => dispatch(expenseTest())
 })
 
-// have to adjust this to target only category state portion or expense state portion
 const mapStateToProps = state => ({
     category : state.catReducer,
-    // expense : state.expReducer
 })
 
 export default connect(mapStateToProps,mapDispatchToProps)(Dashboard)
